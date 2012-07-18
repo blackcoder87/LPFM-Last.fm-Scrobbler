@@ -12,8 +12,7 @@
     <AssemblyName>Lpfm.LastFmScrobbler</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,6 +50,7 @@
     <Compile Include="Api\AuthApi.cs" />
     <Compile Include="Api\LastFmApiException.cs" />
     <Compile Include="Api\TrackApi.cs" />
+    <Compile Include="HttpUtility.cs" />
     <Compile Include="QueuingScrobbler.cs" />
     <Compile Include="AuthenticationToken.cs" />
     <Compile Include="Authentication.cs" />

@@ -48,6 +48,8 @@ namespace Lpfm.LastFmScrobbler
         /// The exception thrown when scrobbling (if any)
         /// </summary>
         public Exception Exception { get; set; }
+
+        public int ErrorCode { get; set; }
     }
 
     /// <summary>
@@ -61,4 +63,12 @@ namespace Lpfm.LastFmScrobbler
     /// </summary>
     public class ScrobbleResponse : Response
     {}
+
+    /// <summary>
+    /// A Rating (Love, UnLove, Ban, UnBan) Response DTO
+    /// </summary>
+    public class RatingResponse : Response
+    {
+        public bool Success { get { return ErrorCode == 0; } }
+    }
 }

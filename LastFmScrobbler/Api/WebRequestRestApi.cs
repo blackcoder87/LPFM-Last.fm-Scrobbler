@@ -25,6 +25,13 @@ namespace Lpfm.LastFmScrobbler.Api
         /// </summary>
         public const string NameValuePairStringSeperator = "&";
 
+        private static WebProxy _proxy = null;
+
+        public static void SetWebProxy(WebProxy proxy)
+        {
+            _proxy = proxy;
+        }
+
         #region IRestApi Members
 
         /// <summary>
@@ -162,7 +169,11 @@ namespace Lpfm.LastFmScrobbler.Api
 
         protected virtual WebRequest CreateWebRequest(Uri uri)
         {
-            return WebRequest.Create(uri);
+            var request = WebRequest.Create(uri);
+            if (_proxy != null)
+                request.Proxy = _proxy;
+
+            return request;
         }
 
         protected virtual WebRequest CreateWebRequest(string uri)

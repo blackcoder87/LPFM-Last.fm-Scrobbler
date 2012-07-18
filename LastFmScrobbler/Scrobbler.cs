@@ -1,5 +1,6 @@
 ﻿using System;
 using Lpfm.LastFmScrobbler.Api;
+using System.Net;
 
 namespace Lpfm.LastFmScrobbler
 {
@@ -19,24 +20,13 @@ namespace Lpfm.LastFmScrobbler
         public const int MinimumScrobbleTrackLengthInSeconds = 30;
 
         /// <summary>
-        /// Instantiates a <see cref="Scrobbler"/>
-        /// </summary>
-        /// <param name="apiKey">An API Key from Last.fm. See http://www.last.fm/api/account </param>
-        /// <param name="apiSecret">An API Secret from Last.fm. See http://www.last.fm/api/account </param>
-        /// <exception cref="ArgumentNullException"/>
-        public Scrobbler(string apiKey, string apiSecret)
-            : this(apiKey, apiSecret, null)
-        {
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="apiKey">An API Key from Last.fm. See http://www.last.fm/api/account </param>
         /// <param name="apiSecret">An API Secret from Last.fm. See http://www.last.fm/api/account </param>
         /// <param name="sessionKey">An authorized Last.fm Session Key. See <see cref="GetSession"/></param>
         /// <exception cref="ArgumentNullException"/>
-        public Scrobbler(string apiKey, string apiSecret, string sessionKey)
+        public Scrobbler(string apiKey, string apiSecret, string sessionKey = null)
         {
             if (string.IsNullOrEmpty(apiKey)) throw new ArgumentNullException("apiKey");
             if (string.IsNullOrEmpty(apiSecret)) throw new ArgumentNullException("apiSecret");
@@ -48,6 +38,17 @@ namespace Lpfm.LastFmScrobbler
             AuthApi = new AuthApi();
             TrackApi = new TrackApi();
         }
+
+        /// <summary>
+        /// Pass in a WebProxy to be used by LPFM
+        /// </summary>
+        /// <param name="proxy">A configured WebProxy object</param>
+        public static void SetWebProxy(WebProxy proxy)
+        {
+            Lpfm.LastFmScrobbler.Api.WebRequestRestApi.SetWebProxy(proxy);
+        }
+
+        public bool HasSession { get { return Authentication.Session != null; } }
 
         private Authentication Authentication { get; set; }
         internal AuthenticationToken AuthenticationToken { get; set; }
@@ -129,6 +130,62 @@ namespace Lpfm.LastFmScrobbler
             }
 
             return TrackApi.Scrobble(track, Authentication);
+        }
+
+        /// <summary>
+        /// Submits a Track Love request to the Last.fm web service
+        /// </summary>
+        /// <param name="track">A <see cref="Track"/></param>
+        /// <returns>A <see cref="RatingResponse"/></returns>
+        /// <remarks>The <see cref="Track"/> passed in must be a "Corrected Track" as 
+        /// returned in <see cref="ScrobbleResponse"/> or <see cref="NowPlayingResponse"/>
+        public RatingResponse Love(Track track)
+        {
+            var result = TrackApi.Love(track, Authentication);
+            result.Track = track;
+            return result;
+        }
+
+        /// <summary>
+        /// Submits a Track unLove request to the Last.fm web service
+        /// </summary>
+        /// <param name="track">A <see cref="Track"/></param>
+        /// <returns>A <see cref="RatingResponse"/></returns>
+        /// <remarks>The <see cref="Track"/> passed in must be a "Corrected Track" as 
+        /// returned in <see cref="ScrobbleResponse"/> or <see cref="NowPlayingResponse"/>
+        public RatingResponse UnLove(Track track)
+        {
+            var result = TrackApi.UnLove(track, Authentication);
+            result.Track = track;
+            return result;
+        }
+
+        /// <summary>
+        /// Submits a Track Ban request to the Last.fm web service
+        /// </summary>
+        /// <param name="track">A <see cref="Track"/></param>
+        /// <returns>A <see cref="RatingResponse"/></returns>
+        /// <remarks>The <see cref="Track"/> passed in must be a "Corrected Track" as 
+        /// returned in <see cref="ScrobbleResponse"/> or <see cref="NowPlayingResponse"/>
+        public RatingResponse Ban(Track track)
+        {
+            var result = TrackApi.Ban(track, Authentication);
+            result.Track = track;
+            return result;
+        }
+
+        /// <summary>
+        /// Submits a Track UnBan request to the Last.fm web service
+        /// </summary>
+        /// <param name="track">A <see cref="Track"/></param>
+        /// <returns>A <see cref="RatingResponse"/></returns>
+        /// <remarks>The <see cref="Track"/> passed in must be a "Corrected Track" as 
+        /// returned in <see cref="ScrobbleResponse"/> or <see cref="NowPlayingResponse"/>
+        public RatingResponse UnBan(Track track)
+        {
+            var result = TrackApi.UnBan(track, Authentication);
+            result.Track = track;
+            return result;
         }
 
         protected virtual void GetAuthenticationToken()

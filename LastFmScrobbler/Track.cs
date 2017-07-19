@@ -91,5 +91,73 @@ namespace Lpfm.LastFmScrobbler
         /// </summary>
         public DateTime? WhenStartedPlaying { get; set; }
 
+        public override bool Equals(System.Object obj)
+        {
+            // If parameter is null return false.
+            if (obj == null)
+            {
+                return false;
+            }
+
+            // If parameter cannot be cast to Point return false.
+            Track p = obj as Track;
+            if ((System.Object)p == null)
+            {
+                return false;
+            }
+
+            // Return true if the fields match:
+            return equals(p);
+        }
+
+        public bool equals(Track track)
+        {
+            if (track == null)
+            {
+                return false;
+            }
+
+            if (track.TrackName != this.TrackName)
+            {
+                return false;
+            }
+
+            if (track.ArtistName != this.ArtistName)
+            {
+                return false;
+            }
+
+            if (track.AlbumName != this.AlbumName)
+            {
+                return false;
+            }
+
+            if (track.AlbumArtist != this.AlbumArtist)
+            {
+                return false;
+            }
+
+            if (track.TrackNumber != this.TrackNumber)
+            {
+                return false;
+            }
+
+            if (track.MusicBrainzId != this.MusicBrainzId)
+            {
+                return false;
+            }
+
+            if (track.Duration != this.Duration)
+            {
+                return false;
+            }
+
+            if (track.WhenStartedPlaying != this.WhenStartedPlaying)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

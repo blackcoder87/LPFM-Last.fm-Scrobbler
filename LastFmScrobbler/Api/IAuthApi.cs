@@ -14,5 +14,10 @@ namespace Lpfm.LastFmScrobbler.Api
         /// Fetch a session key for a user
         /// </summary>
         void GetSession(Authentication authentication, AuthenticationToken token);
+
+        /// <summary>
+        /// Fetch a session key for a user
+        /// </summary>
+        void GetMobileSession(Authentication authentication, UserCredentials usercredentials);
     }
 }

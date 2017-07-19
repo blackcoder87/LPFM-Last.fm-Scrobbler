@@ -12,6 +12,7 @@ namespace Lpfm.LastFmScrobbler.Api
         private const string AuthGetTokenXPath = "/lfm/token";
         private const string GetTokenMethodName = "auth.getToken";
         internal const string GetSessionMethodName = "auth.getSession";
+        internal const string GetMobileSessionMethodName = "auth.getMobileSession";
 
         internal AuthApi() : this(new WebRequestRestApi())
         {
@@ -51,6 +52,23 @@ namespace Lpfm.LastFmScrobbler.Api
             ApiHelper.AddRequiredParams(parameters, GetSessionMethodName, authentication);
 
             XPathNavigator navigator = RestApi.SendGetRequest(ApiHelper.LastFmWebServiceRootUrl, parameters);
+            ApiHelper.CheckLastFmStatus(navigator);
+
+            authentication.Session = GetSessionFromNavigator(navigator);
+        }
+
+        /// <summary>
+        /// Fetch a session key for a user
+        /// </summary>
+        public void GetMobileSession(Authentication authentication, UserCredentials userCredentials)
+        {
+            var parameters = new Dictionary<string, string>();
+            parameters.Add("password", userCredentials.Password);
+            parameters.Add("username", userCredentials.Username);
+
+            ApiHelper.AddRequiredParams(parameters, GetMobileSessionMethodName, authentication);
+
+            XPathNavigator navigator = RestApi.SendPostRequest(ApiHelper.LastFmWebServiceRootUrl.Replace("http://","https://"), parameters);
             ApiHelper.CheckLastFmStatus(navigator);
 
             authentication.Session = GetSessionFromNavigator(navigator);

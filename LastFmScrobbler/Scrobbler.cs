@@ -94,6 +94,27 @@ namespace Lpfm.LastFmScrobbler
         }
 
         /// <summary>
+        /// Gets an authorized Session Key for the API Key, Secret, username and password provided. 
+        /// See http://www.last.fm/api/mobileauth for the full Authorization process. Sets the Authentication Session for this instance at the same time
+        /// </summary>
+        /// <returns>The session key returned from Last.fm as string to be cached or stored by the client</returns>
+        /// <remarks>Session Keys are forever. Once a client has obtained a session key it should be cached or stored by the client, and the next time this
+        /// Scrobbler is instantiated, it should be passed in with the constructor arguments</remarks>
+        /// <exception cref="InvalidOperationException"/>
+        public string GetMobileSession(UserCredentials UserCredentials)
+        {
+            if (Authentication.Session != null && !string.IsNullOrEmpty(Authentication.Session.Key))
+                throw new InvalidOperationException("This Scrobbler already has a Session Key");
+
+            // Request a Session
+            AuthApi.GetMobileSession(Authentication, UserCredentials);
+
+            if (Authentication.Session == null) throw new InvalidOperationException();
+
+            return Authentication.Session.Key;
+        }
+
+        /// <summary>
         /// Submits a Track Update Now Playing request to the Last.fm web service
         /// </summary>
         /// <param name="track">A <see cref="Track"/></param>

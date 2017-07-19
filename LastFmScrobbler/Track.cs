@@ -86,7 +86,7 @@ namespace Lpfm.LastFmScrobbler
         public TimeSpan Duration { get; set; }
 
         /// <summary>
-        /// Required for Scrobbling, not used for Now Playing. The Date & time that the track started playing in local time. 
+        /// Required for Scrobbling, not used for Now Playing. The Date and time that the track started playing in local time. 
         /// The DateTime will be converted to UTC using <see cref="DateTime.ToUniversalTime"/>
         /// </summary>
         public DateTime? WhenStartedPlaying { get; set; }

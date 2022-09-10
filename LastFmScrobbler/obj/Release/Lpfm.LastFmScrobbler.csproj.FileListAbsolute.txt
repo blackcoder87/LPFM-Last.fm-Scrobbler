@@ -1,0 +1,8 @@
+D:\work\LPFM\LastFmScrobbler\bin\Release\license.txt
+D:\work\LPFM\LastFmScrobbler\bin\Release\Lpfm.LastFmScrobbler.XML
+D:\work\LPFM\LastFmScrobbler\bin\Release\Lpfm.LastFmScrobbler.dll
+D:\work\LPFM\LastFmScrobbler\bin\Release\Lpfm.LastFmScrobbler.pdb
+D:\work\LPFM\LastFmScrobbler\obj\Release\Lpfm.LastFmScrobbler.dll
+D:\work\LPFM\LastFmScrobbler\obj\Release\Lpfm.LastFmScrobbler.pdb
+D:\work\LPFM\LastFmScrobbler\obj\Release\Lpfm.LastFmScrobbler.csproj.AssemblyReference.cache
+D:\work\LPFM\LastFmScrobbler\obj\Release\Lpfm.LastFmScrobbler.csproj.CoreCompileInputs.cache
